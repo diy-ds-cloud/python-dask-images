@@ -1,0 +1,43 @@
+version: "3.1"
+
+services:
+
+  dask-scheduler:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: dask-worker
+    image: syoh/dask-worker:b6fdd5dae6cb
+    hostname: dask-scheduler
+    ports:
+      - 8787:8787
+      - 8786:8786
+    command: ["dask-scheduler"]
+
+  dask-worker:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: dask-worker
+    image: syoh/dask-worker:b6fdd5dae6cb
+    command: ["dask-worker", "tcp://dask-scheduler:8786"]
+    deploy:
+      replicas: 2
+
+  dask-notebook:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: dask-notebook
+    image: syoh/dask-notebook:b6fdd5dae6cb
+    hostname: dask-notebook
+    ports:
+      - "8888:8888"
+    environment:
+      - DASK_SCHEDULER_ADDRESS=dask-scheduler:8786
+      - DASK_DASHBOARD_ADDRESS=dask-scheduler:8787
+      - DASK_DISTRIBUTED__DASHBOARD__LINK="/proxy/{DASK_DASHBOARD_ADDRESS}/status"
+    command:
+      - start-notebook.sh
+      - --ServerApp.password=sha1:3c5a4b522718:bf63e22afd2f2d08d9ef0262f69697c9fa4baa2c
+      - --LabApp.default_url=/lab/workspaces/lab
