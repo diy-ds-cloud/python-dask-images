@@ -44,11 +44,16 @@ jobs:
           tags: |
             type=sha
       -
+        run: |
+          echo "#############################"
+          echo ${{ steps.meta.outputs.tags }}
+      -
         name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
+          images: dddlab/python-worker
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
@@ -59,6 +64,7 @@ jobs:
         with:
           context: .
           push: true
+          images: dddlab/python-notebook
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
