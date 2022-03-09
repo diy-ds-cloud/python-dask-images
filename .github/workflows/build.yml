@@ -42,7 +42,7 @@ jobs:
           context: .
           push: true
           images: dddlab/python-worker
-          tags: dddlab/python-worker:latest,dddlab/python-worker:${GITHUB_SHA::7}
+          tags: "dddlab/python-worker:latest,dddlab/python-worker:${GITHUB_SHA::7}"
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
           target: dask-worker
@@ -53,7 +53,7 @@ jobs:
           context: .
           push: true
           images: dddlab/python-notebook
-          tags: dddlab/python-notebook:latest,dddlab/python-notebook:${GITHUB_SHA::7}
+          tags: "dddlab/python-notebook:latest,dddlab/python-notebook:${GITHUB_SHA::7}"
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
           target: dask-notebook
