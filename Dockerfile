@@ -10,7 +10,6 @@ RUN mamba install --yes \
     dask-labextension>=5 \
     python-graphviz
 
-
 # COPY --chown=1000:100 dask-config.yaml /home/jovyan/.config/dask/labextension-config.yaml
 COPY --chown=1000:100 dask-config.yaml /home/jovyan/.dask/labextension-config.yaml
 COPY --chown=1000:100 dask-dashboard.sh /usr/local/bin/start-notebook.d/dask-dashboard.sh
