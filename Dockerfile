@@ -11,11 +11,11 @@ RUN mamba install --yes \
     python-graphviz
 
 # COPY --chown=1000:100 dask-config.yaml /home/jovyan/.config/dask/labextension-config.yaml
-COPY --chown=1000:100 dask-config.yaml /home/jovyan/.dask/labextension-config.yaml
-COPY --chown=1000:100 dask-dashboard.sh /usr/local/bin/start-notebook.d/dask-dashboard.sh
+COPY --chown=1000:100 etc/dask-config.yaml /home/jovyan/.dask/labextension-config.yaml
+COPY --chown=1000:100 etc/dask-dashboard.sh /usr/local/bin/start-notebook.d/dask-dashboard.sh
 # COPY --chown=1000:100 dask-dashboard.sh /usr/local/bin/before-notebook.d/dask-dashboard.sh
-COPY --chown=1000:100 jupyterlab-workspace.json jupyterlab-workspace.json
-COPY --chown=1000:100 array.ipynb work/array.ipynb
+COPY --chown=1000:100 etc/jupyterlab-workspace.json jupyterlab-workspace.json
+COPY --chown=1000:100 etc/array.ipynb work/array.ipynb
 
 # RUN jupyter lab workspaces import jupyterlab-workspace.json
 
